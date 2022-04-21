@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <br><br>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+        <div class="col-md-6">
+            <br><br>
+            <canvas id="myChartTwo" width="400" height="400"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="myChartThree" width="400" height="400"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="myChartFour" width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [
+            {% for key, value in json_data.items %}
+              '{{ key }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: '친구',
+            data: [
+             {% for key, value in json_data.items %}
+               '{{ value }}',
+             {% endfor %}
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    }
+});
+    
+var ctxTwo = document.getElementById('myChartTwo').getContext('2d');
+var myChartTwo = new Chart(ctxTwo, {
+    type: 'line',
+    data: {
+        labels: [
+            {% for key, value in dictfriendTemp.items %}
+              '{{ key }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: '친구',
+            data: [
+             {% for key, value in dictfriendTemp.items %}
+               '{{ value }}',
+             {% endfor %}
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    }
+});
+    
+var ctxThree = document.getElementById('myChartThree').getContext('2d');
+var myChartThree = new Chart(ctxThree, {
+    type: 'pie',
+    data: {
+        labels: [
+            {% for key, value in dictprofileTemp.items %}
+              '{{ key }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: '성별가입자',
+            data: [
+             {% for key, value in dictprofileTemp.items %}
+               '{{ value }}',
+             {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    }
+});
+    
+var ctxFour = document.getElementById('myChartFour').getContext('2d');
+var myChartFour = new Chart(ctxFour, {
+    type: 'line',
+    data: {
+        labels: [
+            {% for key, value in dictpostFriendTemp.items %}
+              '{{ key }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: '친구',
+            data: [
+             {% for key, value in dictpostFriendTemp.items %}
+               '{{ value }}',
+             {% endfor %}
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    }
+});
+</script>
+{% endblock %}
